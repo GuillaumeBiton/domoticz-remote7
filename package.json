@@ -22,6 +22,7 @@
     },
     "devDependencies": {
         "gulp": "*",
+        "gulp-gh-pages": "*",
         "gulp-jade": "*"
     }
 }

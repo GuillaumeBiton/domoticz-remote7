@@ -4,6 +4,7 @@
 
     var gulp = require('gulp'),
         jade = require('gulp-jade'),
+        deploy = require('gulp-gh-pages'),
 
         paths = {
             libraries: {
@@ -37,5 +38,12 @@
             .pipe(gulp.dest(paths.dist.root));
     });
 
-    gulp.task('default', ['libraries', 'templates', 'scripts']);
+    gulp.task('build', ['libraries', 'templates', 'scripts']);
+
+    gulp.task('deploy', ['build'], function () {
+        return gulp.src(paths.dist.root + '/**/*')
+            .pipe(deploy());
+    });
+
+    gulp.task('default', ['build']);
 }());
