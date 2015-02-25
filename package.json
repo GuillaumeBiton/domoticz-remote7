@@ -1,0 +1,27 @@
+{
+    "name": "domoticz-remote7",
+    "description": "Domoticz Remote App controller",
+    "version": "0.0.1",
+    "authors": [
+        "Guillaume Biton <guillaume.biton@free.fr>"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://guillaumebiton.github.com/domoticz-remote7.git"
+    },
+    "keywords": [
+        "domoticz",
+        "remote",
+        "framework7"
+    ],
+    "license": [
+        "MIT"
+    ],
+    "dependencies": {
+        "framework7": "*"
+    },
+    "devDependencies": {
+        "gulp": "*",
+        "gulp-jade": "*"
+    }
+}
