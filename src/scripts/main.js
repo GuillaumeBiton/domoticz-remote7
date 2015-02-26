@@ -1,5 +1,5 @@
-/*jslint */
-/*global Framework7, Dom7 */
+/*jslint devel:true */
+/*global Framework7, Dom7, domoticz*/
 (function (Framework7, $$) {
     'use strict';
 
@@ -10,8 +10,29 @@
         mainView = app.addView('.view-main', {
             // Enable Dynamic Navbar
             dynamicNavbar: true
-        });
-
+        }),
+		settings = JSON.parse(localStorage.getItem('settings')) || {};
+	
+	if (!settings.url) {
+		app.popup('.settings');
+	}
+	
+	$$('.settings-done').on('click', function () {
+		settings.url = 'http://' + $$('#ip').val() + ":" + $$('#port').val();
+		$$.ajax({
+			url :  settings.url + '/json.htm',
+			success: function (data) {
+				localStorage.setItem('settings',  JSON.stringify(settings));
+				app.closeModal();
+			},
+			error: function () {
+				app.addNotification({
+					title: "Server unavailable",
+					message: "the server doesn't respond to the request"
+				});
+			}
+		});
+	});
+	
     window.app = app;
-
-}(Framework7, Dom7));
+}(Framework7, Dom7, domoticz));
