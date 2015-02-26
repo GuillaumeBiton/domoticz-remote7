@@ -20,7 +20,7 @@
     $$('.settings-done').on('click', function () {
         settings.url = 'http://' + $$('#ip').val() + ":" + $$('#port').val();
         $$.ajax({
-            url: settings.url + '/json.htm?type=devices&jsoncallback=?',
+            url: settings.url + '/json.htm',
             success: function (data) {
                 localStorage.setItem('settings', JSON.stringify(settings));
                 app.closeModal();
@@ -30,7 +30,8 @@
                     title: "Server unavailable",
                     message: "the server doesn't respond to the request"
                 });
-            }
+            },
+            crossDomain: true
         });
     });
 
