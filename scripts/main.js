@@ -11,6 +11,22 @@
             // Enable Dynamic Navbar
             dynamicNavbar: true
         }),
+<<<<<<< HEAD
+		settings = JSON.parse(localStorage.getItem('settings')) || {};
+	
+	if (!settings.url) {
+		app.popup('.settings');
+	}
+	
+	$$('.settings-done').on('click', function () {
+		settings.url = 'http://' + $$('#ip').val() + ":" + $$('#port').val();
+		$$.getJSON(settings.url + '/json.htm?jsoncallback=?', function (data) {
+			localStorage.setItem('settings',  JSON.stringify(settings));
+			app.closeModal();
+		});
+	});
+	
+=======
         settings = JSON.parse(localStorage.getItem('settings')) || {};
 
     if (!settings.url) {
@@ -20,7 +36,7 @@
     $$('.settings-done').on('click', function () {
         settings.url = 'http://' + $$('#ip').val() + ":" + $$('#port').val();
         $$.ajax({
-            url: settings.url + '/json.htm?type=devices&jsoncallback=?',
+            url: settings.url + '/json.htm?jsoncallback=?',
             success: function (data) {
                 localStorage.setItem('settings', JSON.stringify(settings));
                 app.closeModal();
@@ -30,10 +46,10 @@
                     title: "Server unavailable",
                     message: "the server doesn't respond to the request"
                 });
-            },
-            crossDomain: true
+            }
         });
     });
 
+>>>>>>> origin/master
     window.app = app;
 }(Framework7, Dom7, domoticz));
