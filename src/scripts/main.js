@@ -1,11 +1,18 @@
 /*jslint devel:true */
-/*global Framework7, Dom7, domoticz*/
-(function (Framework7, $$) {
+/*global Framework7, Dom7, Template7, i18n*/
+(function (Framework7, $$, T7, i18n) {
     'use strict';
 
+	// Template7 Helpers
+	T7.registerHelper('i18n', function (str) {
+		return i18n.translate(str);
+	});
+	
     var app = new Framework7({
             modalTitle: 'domoticz-remote7',
-            animateNavBackIcon: true
+            animateNavBackIcon: true,
+			// Enable Template rendering
+			template7Pages: true
         }),
         mainView = app.addView('.view-main', {
             // Enable Dynamic Navbar
@@ -14,16 +21,8 @@
 		settings = JSON.parse(localStorage.getItem('settings')) || {};
 	
 	if (!settings.url) {
-		app.popup('.settings');
+		mainView.router.loadPage('wizard.html');
 	}
 	
-	$$('.settings-done').on('click', function () {
-		settings.url = 'http://' + $$('#ip').val() + ":" + $$('#port').val();
-		$$.getJSON(settings.url + '/json.htm?jsoncallback=?', function (data) {
-			localStorage.setItem('settings',  JSON.stringify(settings));
-			app.closeModal();
-		});
-	});
-	
     window.app = app;
-}(Framework7, Dom7, domoticz));
+}(Framework7, Dom7, Template7, i18n));

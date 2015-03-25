@@ -16,37 +16,11 @@ html
 		.statusbar-overlay
 		.views
 			.view.view-main
-				.navbar
-					.navbar-inner
-						.center.sliding domoticz-remote7
 				.pages
 					.page
 						.page-content
-                    
-		.popup.settings
-			.view.navbar-fixed
-				.pages
-					.page
-						.navbar
-							.navbar-inner
-								.center Settings
-								.right
-									a.link.settings-done(href='#') Done
-						.page-content
-							.content-block-title Configure your Domoticz server
-							.list-block
-								ul
-									li
-										.item-content
-											.item-inner
-												.item-input
-													input(type='text', placeholder='IP', id='ip')
-									li
-										.item-content
-											.item-inner
-												.item-input
-													input(type='text', placeholder='Port', id='port')
 		
 		script(type="text/javascript", src="lib/framework7.min.js")
+		script(type="text/javascript", src="scripts/i18n.js")
 		script(type="text/javascript", src="scripts/domoticz.js")
 		script(type="text/javascript", src="scripts/main.js")
