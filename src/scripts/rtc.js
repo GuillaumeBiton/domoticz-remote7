@@ -30,7 +30,7 @@
 //} else {
 // //browser doesn't support webrtc   
 //}
-
+//
 var RTCPeerConnection = /*window.RTCPeerConnection ||*/ window.webkitRTCPeerConnection || window.mozRTCPeerConnection;
 
 if (RTCPeerConnection) {
@@ -57,7 +57,7 @@ if (RTCPeerConnection) {
     function updateDisplay(newAddr) {
         if (newAddr in addrs) return;
         else addrs[newAddr] = true;
-        var displayAddrs = Object.keys(addrs).filter(function (k) { return addrs[k]; });
+        var displayAddrs = Object.keys(addrs).filter(function (k) { console.log(k); return addrs[k]; });
 	}
     
     function grepSDP(sdp) {
@@ -82,3 +82,42 @@ if (RTCPeerConnection) {
     document.getElementById('list').nextSibling.textContent = "In Chrome and Firefox your IP should display automatically, by the power of WebRTCskull.";
 }
 
+(function (RTCPeerConnection) {
+	'use strict';
+	
+	if (!RTCPeerConnection) { return; }
+	
+	var rtc = new RTCPeerConnection({iceServers: []});
+	
+	if (1 || window.mozRTCPeerConnection) {
+		rtc.createDataChannel('', { reliable: false });
+	}
+	
+	rtc.onicecandidate = function (evt) {
+		if (evt.candiddate) {
+			grepSDP("a=" + evt.candidate.candidate);
+		}
+	};
+	
+	rtc.createOffer(function (offerDesc) {
+		grepSDP(offerDesc.sdp);
+		rtc.setLocalDescription(offerDesc);
+	}, function (e) { console.warn("offer failed", e); });
+	
+	function grepSDP(sdp) {
+		var hosts = [];
+		sdp.split('\r\n').forEach(function (line) {
+			if (~line.indexOf("a=candidate")) {
+				var parts = line.split(' '),        // http://tools.ietf.org/html/rfc5245#section-15.1
+                    addr = parts[4],
+                    type = parts[7];
+                if (type === 'host') console.log(addr);
+            } else if (~line.indexOf("c=")) {       // http://tools.ietf.org/html/rfc4566#section-5.7
+                var parts = line.split(' '),
+                    addr = parts[2];
+                console.log(addr);
+            }
+        });
+    }
+	
+}(window.webkitRTCPeerConnection || window.mozRTCPeerConnection));
