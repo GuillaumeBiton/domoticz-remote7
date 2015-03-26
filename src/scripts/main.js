@@ -8,6 +8,18 @@
         return i18n.translate(str);
     });
 
+	T7.registerHelper('unmatch', function (a, b, options) {
+		if (a !== b) {
+			return options.fn(this, options.data);
+		} else {
+			return options.inverse(this, options.data);
+		}
+	});
+	
+	T7.global = {
+		i18n: i18n
+	};
+	
     var app = new Framework7({
             modalTitle: 'domoticz-remote7',
             animateNavBackIcon: true,
@@ -29,5 +41,13 @@
         mainView.router.loadPage('wizard.html');
     }
 
+	$$(document).on('click', '.wizard-setLocale', function (e) {
+		var locale = $$(this)[0].dataset.locale;
+		if (i18n.locale !== locale) {
+			i18n.locale = locale;
+			mainView.router.refreshPreviousPage();
+		}
+	});
+	
     window.app = app;
 }(Framework7, Dom7, Template7, i18n));

@@ -1,20 +1,21 @@
 .pages
-    .page(data-page="wizard-language")
-        .page-content.wizard
-            .wizard-title {{i18n "Choose your language"}}
-            .list-block
-                ul
-                    li
-                        a.item-link.item-content(href="#")
-                            .item-inner
-                                .item-title {{i18n.languages[i18n.locale].languageName}}
-            .list-block
-                ul
-                    {{#each i18n.languages}}
-                    {{#unless languageDefault}}
-                    li
-                        a.item-link.item-content(href="#")
-                            .item-inner
-                                .item-title {{languageName}}
-                    {{/unless}}
-                    {{/each}}
+	.page(data-page="wizard-language")
+		.page-content.wizard
+			.wizard-title {{i18n "Choose your language"}}
+			.list-block
+				ul
+					li
+						a.item-link.item-content.wizard-setLocale(href="wizard-server.html", data-locale="{{i18n.locale}}")
+							.item-inner
+								.item-title {{i18n.languages[i18n.locale].languageName}} 
+			.content-block-title {{i18n "More languages"}}
+			.list-block
+				ul
+					{{#each i18n.languages}}
+					{{#unmatch @key @global.i18n.locale}}
+					li
+						a.item-link.item-content.wizard-setLocale(href="wizard-server.html", data-locale="{{@key}}")
+							.item-inner
+								.item-title {{languageName}}
+					{{/unmatch}}
+					{{/each}}
