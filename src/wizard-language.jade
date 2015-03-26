@@ -14,7 +14,7 @@
 					{{#each i18n.languages}}
 					{{#unmatch @key @global.i18n.locale}}
 					li
-						a.item-link.item-content.wizard-setLocale(href="wizard-server.html", data-locale="{{@key}}")
+						a.item-link.item-content.wizard-setLocale(href="#", data-locale="{{@key}}")
 							.item-inner
 								.item-title {{languageName}}
 					{{/unmatch}}

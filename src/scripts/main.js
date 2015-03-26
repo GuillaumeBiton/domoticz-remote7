@@ -45,7 +45,7 @@
 		var locale = $$(this)[0].dataset.locale;
 		if (i18n.locale !== locale) {
 			i18n.locale = locale;
-			mainView.router.refreshPreviousPage();
+			mainView.router.refreshPage();
 		}
 	});
 	
